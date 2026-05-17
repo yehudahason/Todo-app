@@ -1,0 +1,47 @@
+import { useState } from "react";
+import Footer from "./components/Footer";
+import TodoSection from "./components/TodoSection";
+
+function App() {
+  const [isDark, setIsDark] = useState(false);
+  const baseURL = import.meta.env.BASE_URL;
+
+  return (
+    <>
+      <header>
+        <img
+          src={`${baseURL}/images/bg-desktop-light.jpg`}
+          alt="background"
+          className={`hero-img ${isDark ? "dark" : ""}`}
+        />
+      </header>
+      <main>
+        <div className="container">
+          <div className="header">
+            <h1>TODO</h1>
+            <button
+              className="theme-toggle"
+              onClick={() => setIsDark((prev) => !prev)}
+              aria-label={
+                isDark ? "Switch to light theme" : "Switch to dark theme"
+              }
+            >
+              <img
+                src={`${baseURL}/images/icon-${isDark ? "sun" : "moon"}.svg`}
+                alt="" // Decorative icon, so empty alt is correct alongside aria-label on the button
+                height={40}
+                width={40}
+              />
+            </button>
+          </div>
+          <TodoSection />
+        </div>
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </>
+  );
+}
+
+export default App;
