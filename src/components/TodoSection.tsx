@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+const baseURL = import.meta.env.BASE_URL;
 export default function TodoSection() {
   // Initial sample data based on the screenshot
   const [todos, setTodos] = useState([
@@ -37,7 +38,11 @@ export default function TodoSection() {
   };
 
   // Clear all completed todos
-  const clearCompleted = () => {
+  const clearCompleted = (id?: number) => {
+    if (id) {
+      setTodos(todos.filter((todo) => todo.id !== id));
+      return;
+    }
     setTodos(todos.filter((todo) => !todo.completed));
   };
 
@@ -52,52 +57,95 @@ export default function TodoSection() {
   const activeCount = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div>
+    <section className="todo-section">
       {/* Input Section */}
-      <div>
-        <button disabled aria-label="Circle decorator"></button>
+      <form className="input-form ">
+        <button
+          className="circle"
+          disabled
+          aria-label="Circle decorator"
+        ></button>
         <input
+          className="text-preset-1"
           type="text"
           placeholder="Create a new todo..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-      </div>
+      </form>
 
       {/* Todo List Card */}
       <div>
-        <ul>
+        <ul className="todo-list">
           {filteredTodos.map((todo) => (
-            <li key={todo.id}>
-              <button onClick={() => toggleTodo(todo.id)}>
-                {todo.completed ? "✓" : ""}
+            <li key={todo.id} className="todo-item">
+              <button
+                className="toggle-button"
+                onClick={() => toggleTodo(todo.id)}
+              >
+                {todo.completed ? (
+                  <div className="icon">
+                    <img
+                      src={`${baseURL}/images/icon-check.svg`}
+                      alt="Check icon for completed todo"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
               </button>
               <span
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
+                className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
               >
                 {todo.text}
               </span>
+              <button
+                className="delete-button"
+                onClick={() => clearCompleted(todo.id)}
+              >
+                <img
+                  src={`${baseURL}/images/icon-cross.svg`}
+                  alt="Delete icon"
+                />
+              </button>
             </li>
           ))}
         </ul>
 
         {/* Footer / Controls Section */}
-        <div>
+      </div>
+      <div className="todo-footer">
+        <div className="count text-preset-2-regular">
           <span>{activeCount} items left</span>
-
-          {/* Filters */}
-          <div>
-            <button onClick={() => setFilter("all")}>All</button>
-            <button onClick={() => setFilter("active")}>Active</button>
-            <button onClick={() => setFilter("completed")}>Completed</button>
+          <div className="filters text-preset-2-regular">
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("active")}
+            >
+              Active
+            </button>
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
           </div>
-
-          <button onClick={clearCompleted}>Clear Completed</button>
+          <button
+            className="text-preset-2-regular"
+            onClick={(_) => clearCompleted()}
+          >
+            Clear Completed
+          </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

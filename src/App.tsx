@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import TodoSection from "./components/TodoSection";
 
@@ -6,11 +6,19 @@ function App() {
   const [isDark, setIsDark] = useState(false);
   const baseURL = import.meta.env.BASE_URL;
 
+  useEffect(() => {
+    const body = document.body;
+    if (isDark) {
+      body.classList.add("dark");
+    } else {
+      body.classList.remove("dark");
+    }
+  }, [isDark]);
   return (
     <>
       <header>
         <img
-          src={`${baseURL}/images/bg-desktop-light.jpg`}
+          src={`${baseURL}/images/bg-desktop-${isDark ? "dark" : "light"}.jpg`}
           alt="background"
           className={`hero-img ${isDark ? "dark" : ""}`}
         />
@@ -29,8 +37,6 @@ function App() {
               <img
                 src={`${baseURL}/images/icon-${isDark ? "sun" : "moon"}.svg`}
                 alt="" // Decorative icon, so empty alt is correct alongside aria-label on the button
-                height={40}
-                width={40}
               />
             </button>
           </div>

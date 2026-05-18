@@ -1,20 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  /* --- Blue --- */
+  --blue-500: #3a7cfd;
+
+  /* --- Purple --- */
+  --purple-800: #393a4b;
+  --purple-700: #4d5067;
+  --purple-600: #5b5e7e;
+  --purple-300: #c8cbe7;
+  --purple-100: #e3e4f1;
+
+  /* --- Gray --- */
+  --gray-600: #9495a5;
+  --gray-300: #d1d2da;
+  --gray-50: #fafafa;
+
+  /* --- Navy --- */
+  --navy-950: #171823;
+  --navy-900: #25273d;
+  --navy-850: #494c6b;
+
+  /* Blue Shades */
+  --blue-500: #3a7cfd;
+  /* --- Gradients --- */
+  /* Gradient 1: Light Blue to Bright Purple */
+  --gradient-1-start: #55ddff;
+  --gradient-1-end: #c058f3;
+  --gradient-1: linear-gradient(
+    90deg,
+    var(--gradient-1-start),
+    var(--gradient-1-end)
+  );
+
+  /* Gradient 2: Deep Indigo to Violet */
+  --gradient-2-start: #3710bd;
+  --gradient-2-end: #a42395;
+  --gradient-2: linear-gradient(
+    90deg,
+    var(--gradient-2-start),
+    var(--gradient-2-end)
+  );
+  /* --- Global Font Family --- */
+  --font-family-josefin: "Josefin Sans";
+
+  /* --- Text Preset 1 --- */
+  --text-preset-1-font-size: 18px;
+  --text-preset-1-font-weight: 400; /* Regular */
+  --text-preset-1-line-height: 1; /* 100% */
+  --text-preset-1-letter-spacing: -0.25px;
+
+  /* --- Text Preset 2 (Bold) --- */
+  --text-preset-2-bold-font-size: 14px;
+  --text-preset-2-bold-font-weight: 700; /* Bold */
+  --text-preset-2-bold-line-height: 1;
+  --text-preset-2-bold-letter-spacing: -0.25px;
+
+  /* --- Text Preset 2 (Regular) --- */
+  --text-preset-2-reg-font-size: 14px;
+  --text-preset-2-reg-font-weight: 400; /* Regular */
+  --text-preset-2-reg-line-height: 1;
+  --text-preset-2-reg-letter-spacing: -0.25px;
+
+  /* --- Text Preset 3 --- */
+  --text-preset-3-font-size: 12px;
+  --text-preset-3-font-weight: 400; /* Regular */
+  --text-preset-3-line-height: 1;
+  --text-preset-3-letter-spacing: -0.25px;
+}
+
+/* ==========================================================================
+   Typography Utility Classes
+   ========================================================================== */
+
+.text-preset-1 {
+  font-family: var(--font-family-josefin);
+  font-size: var(--text-preset-1-font-size);
+  font-weight: var(--text-preset-1-font-weight);
+  line-height: var(--text-preset-1-line-height);
+  letter-spacing: var(--text-preset-1-letter-spacing);
+}
+
+.text-preset-2-bold {
+  font-family: var(--font-family-josefin);
+  font-size: var(--text-preset-2-bold-font-size);
+  font-weight: var(--text-preset-2-bold-font-weight);
+  line-height: var(--text-preset-2-bold-line-height);
+  letter-spacing: var(--text-preset-2-bold-letter-spacing);
+}
+
+.text-preset-2-regular {
+  font-family: var(--font-family-josefin);
+  font-size: var(--text-preset-2-reg-font-size);
+  font-weight: var(--text-preset-2-reg-font-weight);
+  line-height: var(--text-preset-2-reg-line-height);
+  letter-spacing: var(--text-preset-2-reg-letter-spacing);
+}
+
+.text-preset-3 {
+  font-family: var(--font-family-josefin);
+  font-size: var(--text-preset-3-font-size);
+  font-weight: var(--text-preset-3-font-weight);
+  line-height: var(--text-preset-3-line-height);
+  letter-spacing: var(--text-preset-3-letter-spacing);
+}
+
 body {
   display: grid;
 
-  min-height: 100vh;
-  min-width: 100vw;
-  background-color: white;
-  overflow-x: hidden;
+  background-color: var(--purple-100);
+  /* overflow-x: hidden; */
 }
-:root {
+body.dark {
+  background-color: var(--navy-950);
+}
+#root {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 .container {
   position: absolute;
@@ -23,22 +143,228 @@ body {
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   min-height: 50vh;
   z-index: 10;
-  background-color: rgb(165, 165, 42);
   width: 35rem;
+  border-radius: 0.8rem;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 1440px;
+  height: 50vh;
+  object-fit: cover;
 }
 .container .header {
+  font-family: var(--font-family-josefin);
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
+  color: white;
+}
+.header button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.todo-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  width: 100%;
+  min-height: 50vh;
+  border-radius: 0.8rem;
+}
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.input-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+body.dark .input-form {
+  background-color: var(--navy-900);
+}
+.input-form .circle {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.input-form input {
+  color: var(--gray-600);
+  border: none;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+body.dark input {
+  background-color: var(--navy-900);
+}
+input:focus {
+  outline: 1px solid var(--blue-500);
+  outline-offset: 3px;
+}
+.toggle-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--gray-600);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body.dark .toggle-button {
+  background-color: var(--navy-900);
+}
+.toggle-button .icon {
+  width: 110%;
+  height: 110%;
+  /* overflow: hidden; */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.7;
+  background-image: var(--gradient-2);
+}
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+}
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.8rem 2rem 0.8rem 1rem;
+  gap: 1rem;
+  width: 100%;
+  /* flex-wrap: wrap; */
+  border-bottom: 1px solid #ccc;
+  height: fit-content;
+}
+body.dark .todo-item {
+  background-color: var(--navy-900);
+}
+.task {
+  display: flex;
+  align-items: center;
+  text-wrap: wrap;
+  line-break: anywhere;
+  width: 80%;
+  text-align: left;
+  margin-left: -1rem;
+  color: var(--navy-850);
+  padding: 0.2rem 0 0;
+}
+.task.completed {
+  text-decoration: line-through;
+  color: var(--gray-600);
+}
+body.dark .todo-list .task {
+  color: var(--purple-100);
+}
+body.dark .todo-list .task.completed {
+  color: var(--gray-600);
+}
+.todo-filter {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  color: var(--gray-600);
+}
+.todo-footer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--gray-600);
+}
+.count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--gray-600);
+}
+body.dark .count {
+  background-color: var(--navy-900);
+}
+.count span {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+body.dark .input-form {
+  background-color: var(--navy-900);
+}
+body.dark .filters {
+  background-color: var(--navy-900);
+}
+.filters button {
+  /* margin-top: 1rem; */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 footer {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  flex-direction: column;
   min-height: 50vh;
   max-width: 1440px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    top: 10%;
+  }
+  .task {
+    width: 70%;
+  }
+  .hero-img {
+    width: 100%;
+    content: url("/images/bg-desktop-light.jpg");
+  }
+  .hero-img.dark {
+    width: 100%;
+    content: url("/images/bg-desktop-dark.jpg");
+  }
+  #root {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
 }
