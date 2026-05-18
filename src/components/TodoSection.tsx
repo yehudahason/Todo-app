@@ -119,12 +119,7 @@ export default function TodoSection() {
       <section className="todo-section">
         {/* Input Section */}
         <form className="input-form" onSubmit={(e) => e.preventDefault()}>
-          <button
-            className="circle"
-            type="button"
-            disabled
-            aria-label="Circle decorator"
-          ></button>
+          <div className="circle" aria-label="Circle decorator"></div>
           <label htmlFor="new-todo-input" className="sr-only">
             Create a new todo item
           </label>
