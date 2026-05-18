@@ -387,7 +387,7 @@ footer {
 
 /* Target the element currently being dragged */
 .todo-item.dragging {
-  opacity: 0.5;
+  opacity: 0.8;
   /* transform: rotate(5deg); */
   border: 2px dashed var(--gray-600);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
