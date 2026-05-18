@@ -215,7 +215,7 @@ export default function TodoSection() {
             <nav className="filtersm text-preset-2-regular">
               <button
                 type="button"
-                className={`text-preset-2-regular ${
+                className={`text-preset-2-bold ${
                   filter === "all" ? "active" : ""
                 }`}
                 onClick={() => setFilter("all")}
@@ -224,7 +224,7 @@ export default function TodoSection() {
               </button>
               <button
                 type="button"
-                className={`text-preset-2-regular ${
+                className={`text-preset-2-bold ${
                   filter === "active" ? "active" : ""
                 }`}
                 onClick={() => setFilter("active")}
@@ -233,7 +233,7 @@ export default function TodoSection() {
               </button>
               <button
                 type="button"
-                className={`text-preset-2-regular ${
+                className={`text-preset-2-bold ${
                   filter === "completed" ? "active" : ""
                 }`}
                 onClick={() => setFilter("completed")}
