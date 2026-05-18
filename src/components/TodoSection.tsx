@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { FilterType, TodoList } from "../types/types";
+import Footer from "./Footer";
 
 const baseURL = import.meta.env.BASE_URL;
 
@@ -109,151 +110,156 @@ export default function TodoSection() {
   }, [todos]);
 
   return (
-    <section className="todo-section">
-      {/* Input Section */}
-      <form className="input-form" onSubmit={(e) => e.preventDefault()}>
-        <button
-          className="circle"
-          type="button"
-          disabled
-          aria-label="Circle decorator"
-        ></button>
-        <input
-          className="text-preset-1"
-          type="text"
-          placeholder="Create a new todo..."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-      </form>
-
-      {/* Todo List Card */}
-      <div>
-        <ul className="todo-list">
-          {filteredTodos.map((todo, _) => {
-            // Find the global index in the main 'todos' array to handle reordering correctly
-            const globalIndex = todos.findIndex((t) => t.id === todo.id);
-
-            return (
-              <li
-                key={todo.id}
-                className={`todo-item ${draggedItemIndex === globalIndex ? "dragging" : ""}`}
-                draggable
-                onDragStart={() => handleDragStart(globalIndex)}
-                onDragOver={(e) => handleDragOver(e, globalIndex)}
-                onDragEnd={handleDragEnd}
-              >
-                <button
-                  className="toggle-button"
-                  type="button"
-                  onClick={() => toggleTodo(todo.id)}
-                  aria-label={
-                    todo.completed
-                      ? "Mark task as active"
-                      : "Mark task as completed"
-                  }
-                >
-                  {todo.completed ? (
-                    <div className="icon">
-                      <img
-                        src={`${baseURL}/images/icon-check.svg`}
-                        alt="Check icon for completed todo"
-                      />
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </button>
-                <span
-                  className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
-                >
-                  {todo.text}
-                </span>
-                <button
-                  className="delete-button"
-                  type="button"
-                  onClick={() => clearCompleted(todo.id)}
-                  aria-label="Delete todo"
-                >
-                  <img
-                    src={`${baseURL}/images/icon-cross.svg`}
-                    alt="Delete icon"
-                  />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {/* Footer / Controls Section */}
-      <div className="todo-footer">
-        <div className="count text-preset-2-regular">
-          <span>{activeCount} items left</span>
-          <div className="filters text-preset-2-regular">
-            <button
-              className={`text-preset-2-regular ${
-                filter === "all" ? "active" : ""
-              }`}
-              onClick={() => setFilter("all")}
-            >
-              All
-            </button>
-            <button
-              className={`text-preset-2-regular ${
-                filter === "active" ? "active" : ""
-              }`}
-              onClick={() => setFilter("active")}
-            >
-              Active
-            </button>
-            <button
-              className={`text-preset-2-regular ${
-                filter === "completed" ? "active" : ""
-              }`}
-              onClick={() => setFilter("completed")}
-            >
-              Completed
-            </button>
-          </div>
+    <>
+      <section className="todo-section">
+        {/* Input Section */}
+        <form className="input-form" onSubmit={(e) => e.preventDefault()}>
           <button
-            className="text-preset-2-regular"
-            onClick={() => clearCompleted()}
-          >
-            Clear Completed
-          </button>
+            className="circle"
+            type="button"
+            disabled
+            aria-label="Circle decorator"
+          ></button>
+          <input
+            className="text-preset-1"
+            type="text"
+            placeholder="Create a new todo..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </form>
+
+        {/* Todo List Card */}
+        <div>
+          <ul className="todo-list">
+            {filteredTodos.map((todo, _) => {
+              // Find the global index in the main 'todos' array to handle reordering correctly
+              const globalIndex = todos.findIndex((t) => t.id === todo.id);
+
+              return (
+                <li
+                  key={todo.id}
+                  className={`todo-item ${draggedItemIndex === globalIndex ? "dragging" : ""}`}
+                  draggable
+                  onDragStart={() => handleDragStart(globalIndex)}
+                  onDragOver={(e) => handleDragOver(e, globalIndex)}
+                  onDragEnd={handleDragEnd}
+                >
+                  <button
+                    className="toggle-button"
+                    type="button"
+                    onClick={() => toggleTodo(todo.id)}
+                    aria-label={
+                      todo.completed
+                        ? "Mark task as active"
+                        : "Mark task as completed"
+                    }
+                  >
+                    {todo.completed ? (
+                      <div className="icon">
+                        <img
+                          src={`${baseURL}/images/icon-check.svg`}
+                          alt="Check icon for completed todo"
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </button>
+                  <span
+                    className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
+                  >
+                    {todo.text}
+                  </span>
+                  <button
+                    className="delete-button"
+                    type="button"
+                    onClick={() => clearCompleted(todo.id)}
+                    aria-label="Delete todo"
+                  >
+                    <img
+                      src={`${baseURL}/images/icon-cross.svg`}
+                      alt="Delete icon"
+                    />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-        <div className="mobile-filters">
-          <div className="filtersm text-preset-2-regular">
+
+        {/* Footer / Controls Section */}
+        <div className="todo-footer">
+          <div className="count text-preset-2-regular">
+            <span>{activeCount} items left</span>
+            <div className="filters text-preset-2-regular">
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "all" ? "active" : ""
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "active" ? "active" : ""
+                }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "completed" ? "active" : ""
+                }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>
             <button
-              className={`text-preset-2-regular ${
-                filter === "all" ? "active" : ""
-              }`}
-              onClick={() => setFilter("all")}
+              className="text-preset-2-regular"
+              onClick={() => clearCompleted()}
             >
-              All
-            </button>
-            <button
-              className={`text-preset-2-regular ${
-                filter === "active" ? "active" : ""
-              }`}
-              onClick={() => setFilter("active")}
-            >
-              Active
-            </button>
-            <button
-              className={`text-preset-2-regular ${
-                filter === "completed" ? "active" : ""
-              }`}
-              onClick={() => setFilter("completed")}
-            >
-              Completed
+              Clear Completed
             </button>
           </div>
+          <div className="mobile-filters">
+            <div className="filtersm text-preset-2-regular">
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "all" ? "active" : ""
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "active" ? "active" : ""
+                }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "completed" ? "active" : ""
+                }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>
+          </div>
+          <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
         </div>
-        <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
-      </div>
-    </section>
+      </section>
+      <footer>
+        <Footer />
+      </footer>
+    </>
   );
 }

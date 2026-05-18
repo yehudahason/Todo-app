@@ -44,9 +44,6 @@ function App() {
           <TodoSection />
         </div>
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </>
   );
 }
