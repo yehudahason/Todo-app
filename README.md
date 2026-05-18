@@ -8,7 +8,7 @@ This is a solution to the [Todo app challenge on Frontend Mentor](https://www.fr
 
 ### Links
 
-- My solution at: [GitHub Pages](https://your-solution-url.com)
+- My solution at: [GitHub Pages](https://yehudahason.github.io/Todo-app/)
 
 ### Built with
 
