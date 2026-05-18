@@ -139,9 +139,9 @@ button {
 
 .container {
   position: absolute;
-  top: 20%;
+  top: 40%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -20%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -435,9 +435,7 @@ footer {
 
 @media (max-width: 600px) {
   .container {
-    width: 1px;
     width: 90%;
-    top: 10%;
   }
   .task {
     width: 70%;
