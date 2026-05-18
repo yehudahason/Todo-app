@@ -232,7 +232,7 @@ input:focus {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  border: 0.0625rem solid var(--gray-600);
+  border: 1px solid var(--gray-600);
   display: flex;
   justify-content: center;
   align-items: center;
