@@ -207,19 +207,11 @@ export default function TodoSection() {
         </div>
 
         {/* Footer / Controls Section */}
-        <div className="todo-footer">
-          <div className="count text-preset-2-regular">
-            <span>{activeCount} items left</span>
 
-            <button
-              type="button"
-              className="text-preset-2-regular"
-              onClick={() => clearCompleted()}
-            >
-              Clear Completed
-            </button>
-          </div>
-          <div className="mobile-filters">
+        <div className="count text-preset-2-regular">
+          <span>{activeCount} items left</span>
+
+          <div className="filters">
             <nav className="filtersm text-preset-2-regular">
               <button
                 type="button"
@@ -250,8 +242,16 @@ export default function TodoSection() {
               </button>
             </nav>
           </div>
-          <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
+          <button
+            type="button"
+            className="completed-btn text-preset-2-regular"
+            onClick={() => clearCompleted()}
+          >
+            Clear Completed
+          </button>
         </div>
+
+        <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
       </section>
 
       <Footer />

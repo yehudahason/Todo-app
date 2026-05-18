@@ -175,6 +175,7 @@ button {
   width: 100%;
   min-height: 50vh;
   border-radius: 0.8rem;
+  /* gap: 1rem; */
 }
 
 ul {
@@ -288,7 +289,6 @@ body.dark .toggle-button:hover {
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  border-radius: 0.5rem;
   padding: 0.8rem 2rem 0.8rem 1rem;
   gap: 1rem;
   width: 100%;
@@ -341,52 +341,60 @@ body.dark .todo-list .task.completed {
   gap: 1.5rem;
 }
 
-.todo-footer button,
-.todo-footer h4 {
+.count button,
+.todo-section h4 {
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: var(--gray-600);
 }
 
-.todo-footer h4 {
+.todo-section h4 {
+  margin-top: 1.75rem;
   text-align: center;
 }
 
 .count {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  background-color: white;
-  border-radius: 0.5rem;
+  justify-content: space-between;
+  /* background-color: white; */
+  border-radius: 0 0 0.5rem 0.5rem;
   padding: 1rem;
+  gap: 1rem 0;
   color: var(--gray-600);
+  background: white;
+}
+.todo-list .todo-item:first-child {
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
+.completed-btn {
+  text-align: right;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
 .count span {
-  width: fit-content;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  background-color: white;
 }
 
 .count button:hover,
 .count button:focus,
 .count button.active,
-.filtersm button:focus,
-.filtersm button.active {
+.filters button:focus,
+.filters button.active {
   color: var(--blue-500);
 }
 
-.mobile-filters {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  display: block;
-}
-
-.mobile-filters .filtersm {
+.filtersm {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,5 +451,30 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+  }
+  .count {
+    grid-template-columns: 1fr 1fr;
+    background: transparent;
+    row-gap: 1rem;
+    padding: 0;
+  }
+  .count span {
+    padding: 1rem;
+    border-radius: 0 0 0 0.5rem;
+  }
+  .filters {
+    grid-column: 1 / 3;
+    grid-row: 2/3;
+    text-align: center;
+    background-color: white;
+    border-radius: 0.5rem;
+  }
+  .count button {
+    background-color: white;
+    padding: 1rem;
+  }
+  .completed-btn {
+    border-radius: 0 0 0.5rem 0;
+    background-color: white;
   }
 }
