@@ -7,24 +7,27 @@
 }
 
 :root {
-  /* --- Colors --- */
-  --blue-500: #3a7cfd;
-
+  /* --- Purple --- */
   --purple-800: #393a4b;
   --purple-700: #4d5067;
   --purple-600: #5b5e7e;
   --purple-300: #c8cbe7;
   --purple-100: #e3e4f1;
 
+  /* --- Gray --- */
   --gray-600: #9495a5;
   --gray-300: #d1d2da;
   --gray-50: #fafafa;
 
+  /* --- Navy --- */
   --navy-950: #171823;
   --navy-900: #25273d;
   --navy-850: #494c6b;
 
+  /* Blue Shades */
+  --blue-500: #3a7cfd;
   /* --- Gradients --- */
+  /* Gradient 1: Light Blue to Bright Purple */
   --gradient-1-start: #55ddff;
   --gradient-1-end: #c058f3;
   --gradient-1: linear-gradient(
@@ -33,6 +36,7 @@
     var(--gradient-1-end)
   );
 
+  /* Gradient 2: Deep Indigo to Violet */
   --gradient-2-start: #3710bd;
   --gradient-2-end: #a42395;
   --gradient-2: linear-gradient(
@@ -40,30 +44,32 @@
     var(--gradient-2-start),
     var(--gradient-2-end)
   );
-
   /* --- Global Font Family --- */
-  --font-family-josefin: "Josefin Sans", sans-serif;
+  --font-family-josefin: "Josefin Sans";
 
-  /* --- Typography Presets (Scalable rem units) --- */
-  --text-preset-1-font-size: 1.125rem; /* 18px */
-  --text-preset-1-font-weight: 400;
-  --text-preset-1-line-height: 1;
-  --text-preset-1-letter-spacing: -0.0156rem; /* -0.25px */
+  /* --- Text Preset 1 --- */
+  --text-preset-1-font-size: 1.125rem;
+  --text-preset-1-font-weight: 400; /* Regular */
+  --text-preset-1-line-height: 1; /* 100% */
+  --text-preset-1-letter-spacing: -0.25px;
 
-  --text-preset-2-bold-font-size: 0.875rem; /* 14px */
-  --text-preset-2-bold-font-weight: 700;
+  /* --- Text Preset 2 (Bold) --- */
+  --text-preset-2-bold-font-size: 1rem;
+  --text-preset-2-bold-font-weight: 700; /* Bold */
   --text-preset-2-bold-line-height: 1;
-  --text-preset-2-bold-letter-spacing: -0.0156rem;
+  --text-preset-2-bold-letter-spacing: -0.25px;
 
-  --text-preset-2-reg-font-size: 0.875rem; /* 14px */
-  --text-preset-2-reg-font-weight: 400;
+  /* --- Text Preset 2 (Regular) --- */
+  --text-preset-2-reg-font-size: 1rem;
+  --text-preset-2-reg-font-weight: 400; /* Regular */
   --text-preset-2-reg-line-height: 1;
-  --text-preset-2-reg-letter-spacing: -0.0156rem;
+  --text-preset-2-reg-letter-spacing: -0.25px;
 
-  --text-preset-3-font-size: 0.75rem; /* 12px */
-  --text-preset-3-font-weight: 400;
+  /* --- Text Preset 3 --- */
+  --text-preset-3-font-size: 0.875rem;
+  --text-preset-3-font-weight: 400; /* Regular */
   --text-preset-3-line-height: 1;
-  --text-preset-3-letter-spacing: -0.0156rem;
+  --text-preset-3-letter-spacing: -0.25px;
 }
 
 /* ==========================================================================
@@ -102,19 +108,15 @@
   letter-spacing: var(--text-preset-3-letter-spacing);
 }
 
-/* ==========================================================================
-   Global / Layout Styles
-   ========================================================================== */
-
 body {
   display: grid;
-  background-color: var(--purple-100);
-}
 
+  background-color: var(--purple-100);
+  /* overflow-x: hidden; */
+}
 body.dark {
   background-color: var(--navy-950);
 }
-
 #root {
   width: 100%;
   margin: 0 auto;
@@ -122,6 +124,7 @@ body.dark {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* overflow: hidden; */
 }
 
 button {
@@ -150,40 +153,38 @@ button {
   height: 50vh;
   object-fit: cover;
 }
-
 .sr-only {
   display: none;
 }
-
 .container .header {
   font-family: var(--font-family-josefin);
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
   color: white;
 }
-
-/* ==========================================================================
-   Todo Component Styles
-   ========================================================================== */
-
+.header button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
 .todo-section {
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
   width: 100%;
   min-height: 50vh;
   border-radius: 0.8rem;
 }
-
 ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .input-form {
   display: flex;
   align-items: center;
@@ -194,19 +195,14 @@ ul {
   border-radius: 0.5rem;
   margin-bottom: 1rem;
 }
-
-body.dark .input-form,
-body.dark .filters,
-body.dark .mobile-filters,
-body.dark .count {
+body.dark .input-form {
   background-color: var(--navy-900);
 }
-
 .input-form .circle {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  border: 1px solid var(--gray-600);
+  border: 1px solid black;
   margin-left: 0.5rem;
 }
 
@@ -216,54 +212,55 @@ body.dark .count {
   width: 87%;
   padding: 0.5rem 0;
 }
-
 body.dark input {
   background-color: var(--navy-900);
 }
-
 input:focus {
-  outline: 0.0625rem solid var(--blue-500);
-  outline-offset: 0.1875rem;
+  outline: 1px solid var(--blue-500);
+  outline-offset: 3px;
 }
-
-/* --- Toggle Buttons & States --- */
-
 .toggle-button {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  border: 0.0625rem solid var(--gray-600);
+  border: 1px solid var(--gray-600);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .add-button {
   margin-right: 0.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .toggle-button:hover {
-  border: 0.125rem solid transparent;
+  border: 2px solid transparent;
+  border-radius: 50%;
+
+  /* Step 2: Apply two backgrounds */
   background-image: linear-gradient(white, white), var(--gradient-1);
+
+  /* Step 3: Clip them correctly */
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
+body.dark .toggle-button:hover {
+  /* Step 2: Apply two backgrounds */
+  background-image:
+    linear-gradient(var(--navy-850), var(--navy-900)), var(--gradient-1);
 
+  /* Step 3: Clip them correctly */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
 body.dark .toggle-button {
   background-color: var(--navy-900);
 }
-
-body.dark .toggle-button:hover {
-  background-image:
-    linear-gradient(var(--navy-850), var(--navy-900)), var(--gradient-1);
-}
-
 .toggle-button .icon {
   width: 110%;
   height: 110%;
+  /* overflow: hidden; */
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -272,17 +269,12 @@ body.dark .toggle-button:hover {
   opacity: 0.7;
   background-image: var(--gradient-2);
 }
-
-/* --- Todo Items --- */
-
 .todo-list {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1px;
   width: 100%;
 }
-
 .todo-item {
   display: flex;
   align-items: center;
@@ -292,15 +284,13 @@ body.dark .toggle-button:hover {
   padding: 0.8rem 2rem 0.8rem 1rem;
   gap: 1rem;
   width: 100%;
-  border-bottom: 0.0625rem solid #ccc;
+  /* flex-wrap: wrap; */
+  border-bottom: 1px solid #ccc;
   height: fit-content;
-  transition: transform 0.2s ease;
 }
-
 body.dark .todo-item {
   background-color: var(--navy-900);
 }
-
 .task {
   display: flex;
   align-items: center;
@@ -312,47 +302,28 @@ body.dark .todo-item {
   color: var(--navy-850);
   padding: 0.2rem 0 0;
 }
-
-body.dark .todo-list .task {
-  color: var(--purple-100);
-}
-
 .task.completed {
   text-decoration: line-through;
   color: var(--gray-600);
 }
-
+body.dark .todo-list .task {
+  color: var(--purple-100);
+}
 body.dark .todo-list .task.completed {
   color: var(--gray-600);
 }
-
-/* --- Footer & Filtering --- */
-
 .todo-filter {
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
   color: var(--gray-600);
 }
-
-.todo-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.todo-footer button,
-.todo-footer h4 {
+.todo-footer button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: var(--gray-600);
 }
-
-.todo-footer h4 {
-  text-align: center;
-}
-
 .count {
   display: flex;
   justify-content: space-between;
@@ -362,7 +333,9 @@ body.dark .todo-list .task.completed {
   padding: 1rem;
   color: var(--gray-600);
 }
-
+body.dark .count {
+  background-color: var(--navy-900);
+}
 .count span {
   width: fit-content;
   display: flex;
@@ -371,53 +344,85 @@ body.dark .todo-list .task.completed {
   gap: 0.5rem;
 }
 
-.count button:hover,
-.count button:focus,
-.count button.active,
-.filtersm button:focus,
-.filtersm button.active {
+.count button:hover {
   color: var(--blue-500);
 }
-
+.count button:focus {
+  color: var(--blue-500);
+}
+.count button.active {
+  color: var(--blue-500);
+}
+body.dark .input-form {
+  background-color: var(--navy-900);
+}
+body.dark .filters {
+  background-color: var(--navy-900);
+}
 .mobile-filters {
   background-color: white;
   padding: 1rem;
   border-radius: 0.5rem;
   display: block;
 }
-
 .mobile-filters .filtersm {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
-
+.filtersm button:focus {
+  color: var(--blue-500);
+}
+.filtersm button.active {
+  color: var(--blue-500);
+}
+body.dark .mobile-filters {
+  background-color: var(--navy-900);
+}
 footer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  max-width: 1440px;
+  /* min-height: 50vh; */
+  max-width: 90rem;
+}
+.todo-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.todo-footer h4 {
+  text-align: center;
+  color: var(--gray-600);
 }
 
 /* ==========================================================================
    Drag and Drop Visual Effects
    ========================================================================== */
 
+/* Target the element currently being dragged */
 .todo-item.dragging {
   opacity: 0.8;
-  border: 0.125rem dashed var(--gray-600);
-  box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.15);
+  /* transform: rotate(5deg); */
+  border: 2px dashed var(--gray-600);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   transition: transform 0.1s ease;
   z-index: 999;
 }
 
-/* ==========================================================================
-   Media Queries
-   ========================================================================== */
+/* Ensure smooth transition when the items swap places */
+.todo-list {
+  position: relative;
+}
 
-@media (max-width: 600px) {
+.todo-item {
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 37.5rem) {
   .input-form {
     gap: 0.5rem;
   }
