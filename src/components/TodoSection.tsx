@@ -1,19 +1,32 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import type { FilterType, TodoList } from "../types/types";
 const baseURL = import.meta.env.BASE_URL;
 export default function TodoSection() {
   // Initial sample data based on the screenshot
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Complete online JavaScript course", completed: true },
-    { id: 2, text: "Jog around the park 3x", completed: false },
-    { id: 3, text: "10 minutes meditation", completed: false },
-    { id: 4, text: "Read for 1 hour", completed: false },
-    { id: 5, text: "Pick up groceries", completed: false },
-    { id: 6, text: "Complete Todo App on Frontend Mentor", completed: false },
-  ]);
+  const [todos, setTodos] = useState<TodoList>(() => start());
 
   const [inputValue, setInputValue] = useState("");
-  const [filter, setFilter] = useState("all"); // "all" | "active" | "completed"
+  const [filter, setFilter] = useState<FilterType>("all"); // "all" | "active" | "completed"
+
+  function start() {
+    const savedTasks = localStorage.getItem("tasks");
+    if (savedTasks) {
+      try {
+        return JSON.parse(savedTasks);
+      } catch (e) {
+        console.error("Error parsing localStorage tasks", e);
+      }
+    }
+    // Fallback to initial sample data if localStorage is empty
+    return [
+      { id: 1, text: "Complete online JavaScript course", completed: true },
+      { id: 2, text: "Jog around the park 3x", completed: false },
+      { id: 3, text: "10 minutes meditation", completed: false },
+      { id: 4, text: "Read for 1 hour", completed: false },
+      { id: 5, text: "Pick up groceries", completed: false },
+      { id: 6, text: "Complete Todo App on Frontend Mentor", completed: false },
+    ];
+  }
 
   // Add a new todo
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,6 +69,9 @@ export default function TodoSection() {
   // Count active items remaining
   const activeCount = todos.filter((todo) => !todo.completed).length;
 
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(todos));
+  }, [todos]);
   return (
     <section className="todo-section">
       {/* Input Section */}
@@ -144,6 +160,28 @@ export default function TodoSection() {
           >
             Clear Completed
           </button>
+        </div>
+        <div className="mobile-filters">
+          <div className="filtersm text-preset-2-regular">
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("active")}
+            >
+              Active
+            </button>
+            <button
+              className="text-preset-2-regular"
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
+          </div>
         </div>
       </div>
     </section>

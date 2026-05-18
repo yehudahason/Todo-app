@@ -136,6 +136,7 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+
 .container {
   position: absolute;
   top: 20%;
@@ -144,7 +145,8 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 50vh;
+  gap: 2rem;
+  min-height: auto;
   z-index: 10;
   width: 35rem;
   border-radius: 0.8rem;
@@ -173,7 +175,7 @@ button {
 .todo-section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   /* align-items: center; */
   width: 100%;
   min-height: 50vh;
@@ -302,7 +304,7 @@ body.dark .todo-list .task.completed {
   align-items: center;
   background-color: white;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   color: var(--gray-600);
 }
 body.dark .count {
@@ -324,6 +326,12 @@ body.dark .count {
   background-color: white;
   border-radius: 0.5rem;
 }
+.count button:hover {
+  color: var(--blue-500);
+}
+.count button:focus {
+  color: var(--blue-500);
+}
 body.dark .input-form {
   background-color: var(--navy-900);
 }
@@ -344,7 +352,9 @@ footer {
   min-height: 50vh;
   max-width: 1440px;
 }
-
+.mobile-filters {
+  display: none;
+}
 @media (max-width: 600px) {
   .container {
     width: 90%;
@@ -366,5 +376,28 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+  }
+  .filters {
+    display: none;
+  }
+  .mobile-filters {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: block;
+  }
+  .mobile-filters .filtersm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .filtersm button:focus {
+    color: var(--blue-500);
+  }
+  body.dark .mobile-filters {
+    background-color: var(--navy-900);
   }
 }

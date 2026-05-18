@@ -14,6 +14,7 @@ function App() {
       body.classList.remove("dark");
     }
   }, [isDark]);
+
   return (
     <>
       <header>
