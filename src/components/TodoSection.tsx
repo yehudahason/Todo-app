@@ -120,7 +120,12 @@ export default function TodoSection() {
             disabled
             aria-label="Circle decorator"
           ></button>
+          <label htmlFor="new-todo-input" className="sr-only">
+            Create a new todo item
+          </label>
           <input
+            id="new-todo-input"
+            name="new-todo-input"
             className="text-preset-1"
             type="text"
             placeholder="Create a new todo..."
@@ -193,33 +198,9 @@ export default function TodoSection() {
         <div className="todo-footer">
           <div className="count text-preset-2-regular">
             <span>{activeCount} items left</span>
-            <div className="filters text-preset-2-regular">
-              <button
-                className={`text-preset-2-regular ${
-                  filter === "all" ? "active" : ""
-                }`}
-                onClick={() => setFilter("all")}
-              >
-                All
-              </button>
-              <button
-                className={`text-preset-2-regular ${
-                  filter === "active" ? "active" : ""
-                }`}
-                onClick={() => setFilter("active")}
-              >
-                Active
-              </button>
-              <button
-                className={`text-preset-2-regular ${
-                  filter === "completed" ? "active" : ""
-                }`}
-                onClick={() => setFilter("completed")}
-              >
-                Completed
-              </button>
-            </div>
+
             <button
+              type="button"
               className="text-preset-2-regular"
               onClick={() => clearCompleted()}
             >
@@ -227,8 +208,9 @@ export default function TodoSection() {
             </button>
           </div>
           <div className="mobile-filters">
-            <div className="filtersm text-preset-2-regular">
+            <nav className="filtersm text-preset-2-regular">
               <button
+                type="button"
                 className={`text-preset-2-regular ${
                   filter === "all" ? "active" : ""
                 }`}
@@ -237,6 +219,7 @@ export default function TodoSection() {
                 All
               </button>
               <button
+                type="button"
                 className={`text-preset-2-regular ${
                   filter === "active" ? "active" : ""
                 }`}
@@ -245,6 +228,7 @@ export default function TodoSection() {
                 Active
               </button>
               <button
+                type="button"
                 className={`text-preset-2-regular ${
                   filter === "completed" ? "active" : ""
                 }`}
@@ -252,7 +236,7 @@ export default function TodoSection() {
               >
                 Completed
               </button>
-            </div>
+            </nav>
           </div>
           <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
         </div>

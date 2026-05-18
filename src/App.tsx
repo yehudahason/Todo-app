@@ -19,8 +19,9 @@ function App() {
       <header>
         <img
           src={`${baseURL}/images/bg-desktop-${isDark ? "dark" : "light"}.jpg`}
-          alt="background"
           className={`hero-img ${isDark ? "dark" : ""}`}
+          alt="Hero image"
+          aria-hidden="true"
         />
       </header>
       <main>

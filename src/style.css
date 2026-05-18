@@ -158,6 +158,9 @@ button {
   height: 50vh;
   object-fit: cover;
 }
+.sr-only {
+  display: none;
+}
 .container .header {
   font-family: var(--font-family-josefin);
   font-size: 20px;
@@ -330,15 +333,7 @@ body.dark .count {
   align-items: center;
   gap: 0.5rem;
 }
-.filters {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 0.5rem;
-  background-color: white;
-  border-radius: 0.5rem;
-}
+
 .count button:hover {
   color: var(--blue-500);
 }
@@ -354,11 +349,26 @@ body.dark .input-form {
 body.dark .filters {
   background-color: var(--navy-900);
 }
-.filters button {
-  /* margin-top: 1rem; */
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+.mobile-filters {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: block;
+}
+.mobile-filters .filtersm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.filtersm button:focus {
+  color: var(--blue-500);
+}
+.filtersm button.active {
+  color: var(--blue-500);
+}
+body.dark .mobile-filters {
+  background-color: var(--navy-900);
 }
 footer {
   display: flex;
@@ -373,9 +383,7 @@ footer {
   flex-direction: column;
   gap: 1.5rem;
 }
-.mobile-filters {
-  display: none;
-}
+
 .todo-footer h4 {
   text-align: center;
   color: var(--gray-600);
@@ -408,6 +416,7 @@ footer {
 
 @media (max-width: 600px) {
   .container {
+    width: 1px;
     width: 90%;
     top: 10%;
   }
@@ -427,31 +436,5 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-  }
-  .filters {
-    display: none;
-  }
-  .mobile-filters {
-    width: 100%;
-    margin-top: 1rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    display: block;
-  }
-  .mobile-filters .filtersm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  }
-  .filtersm button:focus {
-    color: var(--blue-500);
-  }
-  .filtersm button.active {
-    color: var(--blue-500);
-  }
-  body.dark .mobile-filters {
-    background-color: var(--navy-900);
   }
 }
