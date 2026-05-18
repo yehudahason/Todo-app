@@ -208,12 +208,13 @@ body.dark .input-form {
   height: 1.5rem;
   border-radius: 50%;
   border: 1px solid black;
+  margin-left: 0.5rem;
 }
 
 .input-form input {
   color: var(--gray-600);
   border: none;
-  width: 100%;
+  width: 87%;
   padding: 0.5rem 0;
 }
 body.dark input {
@@ -232,6 +233,12 @@ input:focus {
   justify-content: center;
   align-items: center;
 }
+.add-button {
+  margin-right: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .toggle-button:hover {
   /* padding: 1rem; */
   border: 2px solid transparent;
@@ -239,6 +246,18 @@ input:focus {
 
   /* Step 2: Apply two backgrounds */
   background-image: linear-gradient(white, white), var(--gradient-1);
+
+  /* Step 3: Clip them correctly */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+body.dark .toggle-button:hover {
+  border: 2px solid transparent;
+  border-radius: 50%;
+
+  /* Step 2: Apply two backgrounds */
+  background-image:
+    linear-gradient(var(--navy-850), var(--navy-900)), var(--gradient-1);
 
   /* Step 3: Clip them correctly */
   background-origin: border-box;

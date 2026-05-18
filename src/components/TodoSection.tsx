@@ -38,14 +38,19 @@ export default function TodoSection() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       e.preventDefault(); // Prevent form submission reloading
-      const newTodo = {
-        id: Date.now(),
-        text: inputValue.trim(),
-        completed: false,
-      };
-      setTodos([...todos, newTodo]);
-      setInputValue("");
+      handleAdd();
     }
+  };
+  const handleAdd = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (inputValue.trim() === "") return;
+    if (e) e.preventDefault(); // Prevent form submission reloading
+    const newTodo = {
+      id: Date.now(),
+      text: inputValue.trim(),
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+    setInputValue("");
   };
 
   // Toggle todo completion
@@ -133,6 +138,14 @@ export default function TodoSection() {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
           />
+          <button
+            className="add-button"
+            type="button"
+            onClick={(e) => handleAdd(e)}
+            aria-label="Add task"
+          >
+            <img src={`${baseURL}/images/add.svg`} alt="add task" />
+          </button>
         </form>
 
         {/* Todo List Card */}
