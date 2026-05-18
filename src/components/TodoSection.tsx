@@ -251,7 +251,7 @@ export default function TodoSection() {
           </button>
         </div>
 
-        <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
+        <h4 className="text-preset-2-regular">Drag and drop to reorder list</h4>
       </section>
 
       <Footer />
