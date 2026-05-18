@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Footer from "./components/Footer";
 import TodoSection from "./components/TodoSection";
 
 function App() {
