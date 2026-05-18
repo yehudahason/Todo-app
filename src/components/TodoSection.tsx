@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import type { FilterType, TodoList } from "../types/types";
+
 const baseURL = import.meta.env.BASE_URL;
+
 export default function TodoSection() {
   // Initial sample data based on the screenshot
   const [todos, setTodos] = useState<TodoList>(() => start());
 
   const [inputValue, setInputValue] = useState("");
   const [filter, setFilter] = useState<FilterType>("all"); // "all" | "active" | "completed"
+
+  // Track the index of the item currently being dragged
+  const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
 
   function start() {
     const savedTasks = localStorage.getItem("tasks");
@@ -31,6 +36,7 @@ export default function TodoSection() {
   // Add a new todo
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
+      e.preventDefault(); // Prevent form submission reloading
       const newTodo = {
         id: Date.now(),
         text: inputValue.trim(),
@@ -59,6 +65,35 @@ export default function TodoSection() {
     setTodos(todos.filter((todo) => !todo.completed));
   };
 
+  // --- DRAG AND DROP HANDLERS ---
+
+  const handleDragStart = (index: number) => {
+    setDraggedItemIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault(); // Necessary to allow dropping
+
+    if (draggedItemIndex === null || draggedItemIndex === index) return;
+
+    // Reorder the todos array dynamically as the user drags
+    const updatedTodos = [...todos];
+    const draggedItem = updatedTodos[draggedItemIndex];
+
+    // Remove the item from its original position and insert it at the new target index
+    updatedTodos.splice(draggedItemIndex, 1);
+    updatedTodos.splice(index, 0, draggedItem);
+
+    setDraggedItemIndex(index);
+    setTodos(updatedTodos);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedItemIndex(null);
+  };
+
+  // ------------------------------
+
   // Filter logic
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") return !todo.completed;
@@ -72,12 +107,14 @@ export default function TodoSection() {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(todos));
   }, [todos]);
+
   return (
     <section className="todo-section">
       {/* Input Section */}
-      <form className="input-form ">
+      <form className="input-form" onSubmit={(e) => e.preventDefault()}>
         <button
           className="circle"
+          type="button"
           disabled
           aria-label="Circle decorator"
         ></button>
@@ -94,61 +131,87 @@ export default function TodoSection() {
       {/* Todo List Card */}
       <div>
         <ul className="todo-list">
-          {filteredTodos.map((todo) => (
-            <li key={todo.id} className="todo-item">
-              <button
-                className="toggle-button"
-                onClick={() => toggleTodo(todo.id)}
-              >
-                {todo.completed ? (
-                  <div className="icon">
-                    <img
-                      src={`${baseURL}/images/icon-check.svg`}
-                      alt="Check icon for completed todo"
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
-              </button>
-              <span
-                className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
-              >
-                {todo.text}
-              </span>
-              <button
-                className="delete-button"
-                onClick={() => clearCompleted(todo.id)}
-              >
-                <img
-                  src={`${baseURL}/images/icon-cross.svg`}
-                  alt="Delete icon"
-                />
-              </button>
-            </li>
-          ))}
-        </ul>
+          {filteredTodos.map((todo, _) => {
+            // Find the global index in the main 'todos' array to handle reordering correctly
+            const globalIndex = todos.findIndex((t) => t.id === todo.id);
 
-        {/* Footer / Controls Section */}
+            return (
+              <li
+                key={todo.id}
+                className={`todo-item ${draggedItemIndex === globalIndex ? "dragging" : ""}`}
+                draggable
+                onDragStart={() => handleDragStart(globalIndex)}
+                onDragOver={(e) => handleDragOver(e, globalIndex)}
+                onDragEnd={handleDragEnd}
+              >
+                <button
+                  className="toggle-button"
+                  type="button"
+                  onClick={() => toggleTodo(todo.id)}
+                  aria-label={
+                    todo.completed
+                      ? "Mark task as active"
+                      : "Mark task as completed"
+                  }
+                >
+                  {todo.completed ? (
+                    <div className="icon">
+                      <img
+                        src={`${baseURL}/images/icon-check.svg`}
+                        alt="Check icon for completed todo"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </button>
+                <span
+                  className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
+                >
+                  {todo.text}
+                </span>
+                <button
+                  className="delete-button"
+                  type="button"
+                  onClick={() => clearCompleted(todo.id)}
+                  aria-label="Delete todo"
+                >
+                  <img
+                    src={`${baseURL}/images/icon-cross.svg`}
+                    alt="Delete icon"
+                  />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
+
+      {/* Footer / Controls Section */}
       <div className="todo-footer">
         <div className="count text-preset-2-regular">
           <span>{activeCount} items left</span>
           <div className="filters text-preset-2-regular">
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "all" ? "active" : ""
+              }`}
               onClick={() => setFilter("all")}
             >
               All
             </button>
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "active" ? "active" : ""
+              }`}
               onClick={() => setFilter("active")}
             >
               Active
             </button>
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "completed" ? "active" : ""
+              }`}
               onClick={() => setFilter("completed")}
             >
               Completed
@@ -156,7 +219,7 @@ export default function TodoSection() {
           </div>
           <button
             className="text-preset-2-regular"
-            onClick={(_) => clearCompleted()}
+            onClick={() => clearCompleted()}
           >
             Clear Completed
           </button>
@@ -164,19 +227,25 @@ export default function TodoSection() {
         <div className="mobile-filters">
           <div className="filtersm text-preset-2-regular">
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "all" ? "active" : ""
+              }`}
               onClick={() => setFilter("all")}
             >
               All
             </button>
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "active" ? "active" : ""
+              }`}
               onClick={() => setFilter("active")}
             >
               Active
             </button>
             <button
-              className="text-preset-2-regular"
+              className={`text-preset-2-regular ${
+                filter === "completed" ? "active" : ""
+              }`}
               onClick={() => setFilter("completed")}
             >
               Completed

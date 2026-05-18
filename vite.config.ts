@@ -11,5 +11,5 @@ export default defineConfig({
     setupFiles: "./src/setupTests.ts",
     css: true,
   },
-  base: "/React-Starter-ts-vitest", //Github Repo Url
+  base: "/Todo-app", //Github Repo Url
 });
