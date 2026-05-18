@@ -1,0 +1,290 @@
+import { useEffect, useState } from "react";
+import type { FilterType, TodoList } from "../types/types";
+import Footer from "./Footer";
+
+const baseURL = import.meta.env.BASE_URL;
+
+export default function TodoSection() {
+  // Initial sample data based on the screenshot
+  const [todos, setTodos] = useState<TodoList>(() => start());
+
+  const [inputValue, setInputValue] = useState("");
+  const [filter, setFilter] = useState<FilterType>("all"); // "all" | "active" | "completed"
+
+  // Track the index of the item currently being dragged
+  const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
+
+  function start() {
+    const savedTasks = localStorage.getItem("tasks");
+    if (savedTasks) {
+      try {
+        return JSON.parse(savedTasks);
+      } catch (e) {
+        console.error("Error parsing localStorage tasks", e);
+      }
+    }
+    // Fallback to initial sample data if localStorage is empty
+    return [
+      { id: 1, text: "Complete online JavaScript course", completed: true },
+      { id: 2, text: "Jog around the park 3x", completed: false },
+      { id: 3, text: "10 minutes meditation", completed: false },
+      { id: 4, text: "Read for 1 hour", completed: false },
+      { id: 5, text: "Pick up groceries", completed: false },
+      { id: 6, text: "Complete Todo App on Frontend Mentor", completed: false },
+    ];
+  }
+
+  // Add a new todo
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      e.preventDefault(); // Prevent form submission reloading
+      const newTodo = {
+        id: Date.now(),
+        text: inputValue.trim(),
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setInputValue("");
+    }
+  };
+
+  // Toggle todo completion
+  const toggleTodo = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
+  };
+
+  // Clear all completed todos
+  const clearCompleted = (id?: number) => {
+    if (id) {
+      setTodos(todos.filter((todo) => todo.id !== id));
+      return;
+    }
+    setTodos(todos.filter((todo) => !todo.completed));
+  };
+
+  // --- DRAG AND DROP HANDLERS ---
+
+  const handleDragStart = (
+    e: React.DragEvent<HTMLLIElement>,
+    index: number,
+  ) => {
+    setDraggedItemIndex(index);
+
+    // const element = e.currentTarget;
+
+    // // We clone or isolate the style modification securely
+    // // before the browser takes its snapshot
+    // element.style.transform = "rotate(25deg)"; // 25deg might be too aggressive and clip, 5-7deg looks cleaner!
+    // element.style.width = `${element.offsetWidth}px`;
+
+    // // Force HTML5 drag image assignment
+    // e.dataTransfer.setDragImage(
+    //   element,
+    //   element.offsetWidth / 2,
+    //   element.offsetHeight / 2,
+    // );
+
+    // // Use a 0ms setTimeout instead of requestAnimationFrame.
+    // // This allows the browser engine to fully capture the snapshot *before* // the layout properties are cleaned up for the inline placeholder.
+    // setTimeout(() => {
+    //   element.style.transform = "";
+    //   element.style.width = "";
+    // }, 0);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+
+    if (draggedItemIndex === null || draggedItemIndex === index) return;
+
+    // FIX: Only update state if the index has explicitly changed
+    // to stop infinite re-rendering loops during drag snapshots.
+    const updatedTodos = [...todos];
+    const draggedItem = updatedTodos[draggedItemIndex];
+
+    updatedTodos.splice(draggedItemIndex, 1);
+    updatedTodos.splice(index, 0, draggedItem);
+
+    // Update index and state together
+    setDraggedItemIndex(index);
+    setTodos(updatedTodos);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedItemIndex(null);
+  };
+
+  // ------------------------------
+
+  // Filter logic
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true; // "all"
+  });
+
+  // Count active items remaining
+  const activeCount = todos.filter((todo) => !todo.completed).length;
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(todos));
+  }, [todos]);
+
+  return (
+    <>
+      <section className="todo-section">
+        {/* Input Section */}
+        <form className="input-form" onSubmit={(e) => e.preventDefault()}>
+          <button
+            className="circle"
+            type="button"
+            disabled
+            aria-label="Circle decorator"
+          ></button>
+          <input
+            className="text-preset-1"
+            type="text"
+            placeholder="Create a new todo..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </form>
+
+        {/* Todo List Card */}
+        <div>
+          <ul className="todo-list">
+            {filteredTodos.map((todo, _) => {
+              // Find the global index in the main 'todos' array to handle reordering correctly
+              const globalIndex = todos.findIndex((t) => t.id === todo.id);
+
+              return (
+                <li
+                  key={todo.id}
+                  className={`todo-item ${draggedItemIndex === globalIndex ? "dragging" : ""}`}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, globalIndex)}
+                  onDragOver={(e) => handleDragOver(e, globalIndex)}
+                  onDragEnd={handleDragEnd}
+                >
+                  <button
+                    className="toggle-button"
+                    type="button"
+                    onClick={() => toggleTodo(todo.id)}
+                    aria-label={
+                      todo.completed
+                        ? "Mark task as active"
+                        : "Mark task as completed"
+                    }
+                  >
+                    {todo.completed ? (
+                      <div className="icon">
+                        <img
+                          src={`${baseURL}/images/icon-check.svg`}
+                          alt="Check icon for completed todo"
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </button>
+                  <span
+                    className={`task text-preset-1 ${todo.completed ? "completed" : ""}`}
+                  >
+                    {todo.text}
+                  </span>
+                  <button
+                    className="delete-button"
+                    type="button"
+                    onClick={() => clearCompleted(todo.id)}
+                    aria-label="Delete todo"
+                  >
+                    <img
+                      src={`${baseURL}/images/icon-cross.svg`}
+                      alt="Delete icon"
+                    />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Footer / Controls Section */}
+        <div className="todo-footer">
+          <div className="count text-preset-2-regular">
+            <span>{activeCount} items left</span>
+            <div className="filters text-preset-2-regular">
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "all" ? "active" : ""
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "active" ? "active" : ""
+                }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "completed" ? "active" : ""
+                }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>
+            <button
+              className="text-preset-2-regular"
+              onClick={() => clearCompleted()}
+            >
+              Clear Completed
+            </button>
+          </div>
+          <div className="mobile-filters">
+            <div className="filtersm text-preset-2-regular">
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "all" ? "active" : ""
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "active" ? "active" : ""
+                }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+              <button
+                className={`text-preset-2-regular ${
+                  filter === "completed" ? "active" : ""
+                }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>
+          </div>
+          <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
+        </div>
+      </section>
+      <footer>
+        <Footer />
+      </footer>
+    </>
+  );
+}

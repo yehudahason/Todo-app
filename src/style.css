@@ -380,6 +380,32 @@ footer {
   text-align: center;
   color: var(--gray-600);
 }
+
+/* ==========================================================================
+   Drag and Drop Visual Effects
+   ========================================================================== */
+
+/* Target the element currently being dragged */
+.todo-item.dragging {
+  opacity: 0.5;
+  /* transform: rotate(5deg); */
+  border: 2px dashed var(--gray-600);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease;
+  z-index: 999;
+}
+
+/* Ensure smooth transition when the items swap places */
+.todo-list {
+  position: relative;
+}
+
+.todo-item {
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
+}
+
 @media (max-width: 600px) {
   .container {
     width: 90%;
