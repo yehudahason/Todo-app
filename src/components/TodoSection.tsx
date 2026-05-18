@@ -119,7 +119,11 @@ export default function TodoSection() {
       <section className="todo-section">
         {/* Input Section */}
         <form className="input-form" onSubmit={(e) => e.preventDefault()}>
-          <div className="circle" aria-label="Circle decorator"></div>
+          <div
+            className="circle"
+            aria-label="Circle decorator"
+            aria-hidden="true"
+          ></div>
           <label htmlFor="new-todo-input" className="sr-only">
             Create a new todo item
           </label>
@@ -249,9 +253,8 @@ export default function TodoSection() {
           <h4 className="text-preset-2-bold">Drag and drop to reorder list</h4>
         </div>
       </section>
-      <footer>
-        <Footer />
-      </footer>
+
+      <Footer />
     </>
   );
 }
