@@ -206,6 +206,7 @@ body.dark .input-form {
   border-radius: 50%;
   border: 1px solid black;
 }
+
 .input-form input {
   color: var(--gray-600);
   border: none;
@@ -227,6 +228,18 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.toggle-button:hover {
+  /* padding: 1rem; */
+  border: 2px solid transparent;
+  border-radius: 50%;
+
+  /* Step 2: Apply two backgrounds */
+  background-image: linear-gradient(white, white), var(--gradient-1);
+
+  /* Step 3: Clip them correctly */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 body.dark .toggle-button {
   background-color: var(--navy-900);
