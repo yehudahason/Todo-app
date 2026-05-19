@@ -49,7 +49,7 @@ export default function TodoSection() {
       text: inputValue.trim(),
       completed: false,
     };
-    setTodos([...todos, newTodo]);
+    setTodos((prev) => [...prev, newTodo]);
     setInputValue("");
   };
 

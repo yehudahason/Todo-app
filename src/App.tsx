@@ -20,8 +20,8 @@ function App() {
         <img
           src={`${baseURL}/images/bg-desktop-${isDark ? "dark" : "light"}.jpg`}
           className={`hero-img ${isDark ? "dark" : ""}`}
-          alt="Hero image"
           aria-hidden="true"
+          alt=""
         />
       </header>
       <main>
