@@ -203,7 +203,7 @@ export default function TodoSection() {
         {/* Footer / Controls Section */}
 
         <div className="count text-preset-2-regular">
-          <span aria-label={`${activeCount} items left`}>
+          <span aria-label={`${activeCount} items left`} aria-live="polite">
             {activeCount} items left
           </span>
 
