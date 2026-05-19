@@ -139,17 +139,17 @@ export default function TodoSection() {
           />
           <button
             className="add-button"
-            type="button"
+            type="submit"
             onClick={(e) => handleAdd(e)}
             aria-label="Add task"
           >
-            <img src={`${baseURL}/images/add.svg`} alt="add task" />
+            <img src={`${baseURL}/images/add.svg`} alt="" />
           </button>
         </form>
 
         {/* Todo List Card */}
         <div>
-          <ul className="todo-list">
+          <ul className="todo-list" aria-label="Tasks list">
             {filteredTodos.map((todo, _) => {
               // Find the global index in the main 'todos' array to handle reordering correctly
               const globalIndex = todos.findIndex((t) => t.id === todo.id);
@@ -162,6 +162,7 @@ export default function TodoSection() {
                   onDragStart={() => handleDragStart(globalIndex)}
                   onDragOver={(e) => handleDragOver(e, globalIndex)}
                   onDragEnd={handleDragEnd}
+                  aria-label={todo.text}
                 >
                   <button
                     className="toggle-button"
@@ -175,10 +176,7 @@ export default function TodoSection() {
                   >
                     {todo.completed ? (
                       <div className="icon">
-                        <img
-                          src={`${baseURL}/images/icon-check.svg`}
-                          alt="Check icon for completed todo"
-                        />
+                        <img src={`${baseURL}/images/icon-check.svg`} alt="" />
                       </div>
                     ) : (
                       ""
@@ -195,10 +193,7 @@ export default function TodoSection() {
                     onClick={() => clearCompleted(todo.id)}
                     aria-label="Delete todo"
                   >
-                    <img
-                      src={`${baseURL}/images/icon-cross.svg`}
-                      alt="Delete icon"
-                    />
+                    <img src={`${baseURL}/images/icon-cross.svg`} alt="" />
                   </button>
                 </li>
               );
@@ -209,7 +204,9 @@ export default function TodoSection() {
         {/* Footer / Controls Section */}
 
         <div className="count text-preset-2-regular">
-          <span>{activeCount} items left</span>
+          <span aria-label={`${activeCount} items left`}>
+            {activeCount} items left
+          </span>
 
           <div className="filters">
             <nav className="filtersm text-preset-2-regular">

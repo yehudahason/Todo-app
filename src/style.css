@@ -154,7 +154,15 @@ button {
 }
 
 .sr-only {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .container .header {
@@ -197,11 +205,34 @@ ul {
   border-radius: 0.5rem;
   margin-bottom: 1rem;
 }
+input::placeholder {
+  color: var(--gray-600); /* Replace with your desired color */
+  opacity: 1; /* Firefox lowers the opacity by default, this fixes it */
+}
+body.dark input::placeholder {
+  color: var(--gray-600);
+  opacity: 1;
+}
 
 body.dark .input-form,
 body.dark .filters,
 body.dark .count {
   background-color: var(--navy-900);
+}
+
+body.dark .input-form input {
+  color: var(--gray-50);
+}
+body.dark .count,
+body.dark .count button,
+body.dark .completed-btn {
+  color: var(--purple-600);
+}
+body.dark .count button.active {
+  color: var(--blue-500);
+}
+body.dark h4 {
+  color: var(--purple-600);
 }
 
 .input-form .circle {
@@ -213,7 +244,7 @@ body.dark .count {
 }
 
 .input-form input {
-  color: var(--gray-600);
+  color: var(--navy-850);
   border: none;
   width: 87%;
   padding: 0.5rem 0;
@@ -316,7 +347,7 @@ body.dark .todo-item {
 }
 
 body.dark .todo-list .task {
-  color: var(--purple-100);
+  color: var(--gray-50);
 }
 
 .task.completed {
@@ -334,7 +365,7 @@ body.dark .todo-list .task.completed {
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
-  color: var(--gray-600);
+  color: var(--navy-850);
 }
 
 .todo-footer {
@@ -473,6 +504,9 @@ body.dark .todo-item.dragging {
     text-align: center;
     background-color: white;
     border-radius: 0.5rem;
+  }
+  .filtersm {
+    gap: 0.5rem;
   }
   body.dark .count {
     background-color: transparent;
