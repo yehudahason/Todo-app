@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { FilterType, TodoList } from "../types/types";
-import Footer from "./Footer";
 
 const baseURL = import.meta.env.BASE_URL;
 
@@ -250,8 +249,6 @@ export default function TodoSection() {
 
         <h4 className="text-preset-2-regular">Drag and drop to reorder list</h4>
       </section>
-
-      <Footer />
     </>
   );
 }

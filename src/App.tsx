@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TodoSection from "./components/TodoSection";
+import Footer from "./components/Footer";
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -44,6 +45,9 @@ function App() {
           <TodoSection />
         </div>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }
