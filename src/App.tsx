@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TodoSection from "./components/TodoSection";
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const baseURL = import.meta.env.BASE_URL;
 
   useEffect(() => {

@@ -290,7 +290,7 @@ body.dark .toggle-button:hover {
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  padding: 0.8rem 2rem 0.8rem 1rem;
+  padding: 1.2rem 2rem 1.2rem 1rem;
   gap: 1rem;
   width: 100%;
   border-bottom: 1px solid var(--gray-300);
@@ -363,7 +363,7 @@ body.dark .todo-list .task.completed {
   justify-content: space-between;
   /* background-color: white; */
   border-radius: 0 0 0.5rem 0.5rem;
-  padding: 1rem;
+  padding: 1.2rem 1rem;
   gap: 1rem 0;
   color: var(--gray-600);
   background: white;
@@ -416,10 +416,13 @@ footer {
 
 .todo-item.dragging {
   opacity: 0.8;
-  border: 0.125rem dashed var(--gray-600);
+  border: 1px dashed var(--navy-850);
   box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.15);
   transition: transform 0.1s ease;
   z-index: 999;
+}
+body.dark .todo-item.dragging {
+  border: 1px dashed var(--gray-50);
 }
 
 /* ==========================================================================
